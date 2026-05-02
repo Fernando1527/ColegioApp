@@ -20,7 +20,7 @@ ColegioApp es una aplicación web desarrollada en ASP.NET Core MVC que permite g
 
 * ASP.NET Core MVC
 * Entity Framework Core
-* SQL Server / LocalDB
+* SQL Server / LocalDB - “el script SQL de creación de la base de datos debe incluirse”
 * Bootstrap
 * Chart.js
 
