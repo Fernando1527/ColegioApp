@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ColegioApp.Data;
 using ColegioApp.Models;
 
 namespace ColegioApp.Controllers
 {
-    public class AlumnosController : Controller
+    public class MateriasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AlumnosController(ApplicationDbContext context)
+        public MateriasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Alumnos
+        // GET: Materias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Alumnos.ToListAsync());
+            return View(await _context.Materias.ToListAsync());
         }
 
-        // GET: Alumnos/Details/5
+        // GET: Materias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,36 +33,35 @@ namespace ColegioApp.Controllers
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos
+            var materia = await _context.Materias
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (alumno == null)
+            if (materia == null)
             {
                 return NotFound();
             }
 
-            return View(alumno);
+            return View(materia);
         }
 
-        // GET: Alumnos/Create
+        // GET: Materias/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Alumnos/Create
+        // POST: Materias/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido")] Alumno alumno)
+        public async Task<IActionResult> Create([Bind("Id,Nombre")] Materia materia)
         {
-            // 🔥 FORZAR GUARDADO (para probar)
-            _context.Add(alumno);
+            _context.Add(materia);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Alumnos/Edit/5
+        // GET: Materias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -69,78 +69,61 @@ namespace ColegioApp.Controllers
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos.FindAsync(id);
-
-            if (alumno == null)
+            var materia = await _context.Materias.FindAsync(id);
+            if (materia == null)
             {
                 return NotFound();
             }
-
-            return View(alumno);
+            return View(materia);
         }
 
-        // POST: Alumnos/Edit/5
+        // POST: Materias/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido")] Alumno alumno)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre")] Materia materia)
         {
-            if (id != alumno.Id)
-            {
-                return NotFound();
-            }
-
-            // 🔥 FORZAR GUARDADO (para evitar problema de validación)
-            try
-            {
-                _context.Update(alumno);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
+            _context.Update(materia);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: Alumnos/Delete/5
+        // GET: Materias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) 
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos
+            var materia = await _context.Materias
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (alumno == null)
+            if (materia == null)
             {
                 return NotFound();
             }
 
-            return View(alumno);
+            return View(materia);
         }
 
-        // POST: Alumnos/Delete/5
+        // POST: Materias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var alumno = await _context.Alumnos.FindAsync(id);
-
-            if (alumno != null)
+            var materia = await _context.Materias.FindAsync(id);
+            if (materia != null)
             {
-                _context.Alumnos.Remove(alumno);
+                _context.Materias.Remove(materia);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlumnoExists(int id)
+        private bool MateriaExists(int id)
         {
-            return _context.Alumnos.Any(e => e.Id == id);
+            return _context.Materias.Any(e => e.Id == id);
         }
     }
 }

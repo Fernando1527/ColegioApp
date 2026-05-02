@@ -1,0 +1,65 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Promedio de Notas por Alumno</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Alumno</th>
+            <th>Promedio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Alumno</td>
+                <td>@item.Promedio.ToString("0.00")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Gráfica de Promedios</h3>
+
+<canvas id="graficaPromedios" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var labels = [];
+        var data = [];
+
+        @foreach (var item in Model)
+        {
+                <text>
+                    labels.push("@item.Alumno");
+                    data.push(@item.Promedio);
+                </text>
+        }
+
+        var ctx = document.getElementById('graficaPromedios').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Promedio de Notas',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
