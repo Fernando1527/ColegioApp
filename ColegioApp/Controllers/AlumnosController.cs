@@ -54,7 +54,6 @@ namespace ColegioApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido")] Alumno alumno)
         {
-            // 🔥 FORZAR GUARDADO (para probar)
             _context.Add(alumno);
             await _context.SaveChangesAsync();
 
@@ -89,7 +88,7 @@ namespace ColegioApp.Controllers
                 return NotFound();
             }
 
-            // 🔥 FORZAR GUARDADO (para evitar problema de validación)
+          
             try
             {
                 _context.Update(alumno);

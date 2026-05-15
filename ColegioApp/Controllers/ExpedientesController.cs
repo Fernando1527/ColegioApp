@@ -142,7 +142,6 @@ namespace ColegioApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // 🔥 NUEVO MÉTODO (PROMEDIOS)
         public IActionResult Promedios()
         {
             var promedios = _context.Expedientes
